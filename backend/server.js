@@ -1,67 +1,55 @@
-const express = require('express');
+const express = require("express");
 const app = express();
-const db = require('./models');
-const User = require("./models/User");
-const cookieParser = require('cookie-parser');
-const { createTokens, validateToken } = require('./JWT');
-
-const dotenv = require('dotenv');
-dotenv.config();
-
 const mongoose = require("mongoose");
+const cookieParser = require("cookie-parser");
+const { ApolloServer } = require("apollo-server-express");
+const typeDefs = require("./graphql/schema");
+const resolvers = require("./graphql/resolver");
+const dotenv = require("dotenv");
+const jwt = require("jsonwebtoken");
 
-const bcrypt = require('bcrypt');
+dotenv.config();
 
 app.use(express.json());
 app.use(cookieParser());
 
-app.post("/register", (req, res) => {
-    const { username, password } = req.body;
-    bcrypt.hash(password, 10).then((hash) => {
-        User.create({ username, password: hash })
-            .then(user => res.json(user))
-            .catch(err => res.status(400).json(err));
-    }).catch(err => res.status(400).json(err));
+
+const server = new ApolloServer({
+  typeDefs,
+  resolvers,
+  context: ({ req }) => {
+    const authHeader = req.headers.authorization || "";
+
+    if (authHeader) {
+      try {
+        const token = authHeader.replace("Bearer ", "");
+        const decoded = jwt.verify(token, process.env.JWT_SECRET || "YOUR_SECRET_KEY");
+        return { userId: decoded.userId };
+      } catch (err) {
+        console.warn("Invalid token:", err.message);
+        return {};
+      }
+    }
+
+    return {};
+  },
 });
 
+async function startServer() {
+  await server.start();
+  server.applyMiddleware({ app });
 
-app.post("/login", async (req, res) => {
-    const { username, password } = req.body;
-
-    const user = await User.findOne({ username });
-
-        if (!user) {
-            return res.status(400).json({ error: "User not found" });
-        }
-
-        const dbPassword = user.password;
-        const match = await bcrypt.compare(password, dbPassword);
-        if (!match) {
-            return res.status(400).json({ error: "Wrong username and password combination" });
-        } else {
-            
-            const accessToken = createTokens(user);
-
-            res.cookie("access-token", accessToken, {
-                maxAge: 60 * 60 * 24 * 30 * 1000, // 30 days
-                httpOnly: true
-            });
-
-            res.json("Login succesful!");
-        }
-
-});
-
-
-app.get("/profile", validateToken, (req, res) => {
-    res.json("profile");
-});
-
-mongoose.connect(process.env.MONGO)
-    .then(() => {
-        console.log("Connected to MongoDB");
-        app.listen(3000, () => {
-            console.log("Server running on port 3000");
-        });
+  mongoose
+    .connect(process.env.MONGO, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
     })
-    .catch(err => console.log("MongoDB Connection Error:", err));
+    .then(() => console.log("✅ MongoDB connected"))
+    .catch((err) => console.log("❌ MongoDB connection error:", err));
+
+  app.listen(4000, () => {
+    console.log("🚀 Server running at http://localhost:4000/graphql");
+  });
+}
+
+startServer();
