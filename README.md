@@ -12,6 +12,8 @@ There are no licenses required to use this application.
 - Right click on the "SoundWav" folder and select "Open In Integrated Terminal".
 - Type "npm i" and click the "Enter" key.
 
+## Update .env for JWT & MongoDB credentials
+
 ## How to Create a JSONWeb Token (JWT)
 
 ## How to Create a New SoundWav account
