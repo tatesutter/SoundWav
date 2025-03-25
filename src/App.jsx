@@ -7,6 +7,10 @@ import { Routes, Route } from "react-router-dom";
 import Profile from "./pages/profile";
 import PlaylistPage from './pages/playlistPage';
 import Search from "./pages/search";
+import SearchUsers from "./pages/searchUsers";
+import UserProfile from "./pages/userProfile";
+import Friends from "./pages/friends";
+
 
 const App = () => {
   const playlistUrl =
@@ -23,6 +27,11 @@ const App = () => {
           <Route path="/profile" element={<Profile />} />
           <Route path="/playlist/:id" element={<PlaylistPage />} />
           <Route path="/search" element={<Search />} />
+          <Route path="/search-users" element={<SearchUsers />} />
+          <Route path="/user/:username" element={<UserProfile />} />
+          <Route path="/profile/friends" element={<Friends />} />
+
+
 
         </Routes>
       </div>

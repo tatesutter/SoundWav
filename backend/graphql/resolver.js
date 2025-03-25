@@ -10,9 +10,30 @@ const resolvers = {
       const user = await User.findById(context.userId).populate("savedPlaylists");
       return user.savedPlaylists;
     },
+
     getPlaylistById: async (_, { id }) => {
       return await Playlist.findById(id).populate("sharedBy");
-    }
+    },
+
+    searchUsers: async (_, { username }) => {
+      return await User.find({
+        username: new RegExp(username, "i"),
+      }).select("-password");
+    },
+
+    getUserProfile: async (_, { username }) => {
+      return await User.findOne({ username })
+        .populate("savedPlaylists")
+        .populate("followers", "username")
+        .populate("following", "username");
+    },
+
+    getCurrentUser: async (_, __, context) => {
+      if (!context.userId) throw new Error("Not authenticated");
+      return await User.findById(context.userId)
+        .populate("savedPlaylists")
+        .populate("following", "username");
+    },
   },
 
   Mutation: {
@@ -34,14 +55,15 @@ const resolvers = {
       const isPasswordValid = await bcrypt.compare(password, user.password);
       if (!isPasswordValid) throw new Error("Incorrect password");
 
-      const token = jwt.sign({ userId: user._id, username: user.username },
-        process.env.JWT_SECRET || "YOUR_SECRET_KEY", {
-        expiresIn: "1d"
-      });
+      const token = jwt.sign(
+        { userId: user._id, username: user.username },
+        process.env.JWT_SECRET || "YOUR_SECRET_KEY",
+        { expiresIn: "1d" }
+      );
 
       return {
         token,
-        message: "Login successful!"
+        message: "Login successful!",
       };
     },
 
@@ -51,13 +73,13 @@ const resolvers = {
       const newPlaylist = new Playlist({
         url,
         title,
-        sharedBy: context.userId
+        sharedBy: context.userId,
       });
 
       await newPlaylist.save();
 
       await User.findByIdAndUpdate(context.userId, {
-        $addToSet: { savedPlaylists: newPlaylist._id }
+        $addToSet: { savedPlaylists: newPlaylist._id },
       });
 
       return newPlaylist;
@@ -65,21 +87,52 @@ const resolvers = {
 
     unsavePlaylistFromUser: async (_, { id }, context) => {
       if (!context.userId) throw new Error("Not authenticated");
-    
-      // Remove playlist reference from the user
+
       await User.findByIdAndUpdate(context.userId, {
         $pull: { savedPlaylists: id },
       });
-    
-      // ✅ Also delete the playlist itself
+
       await Playlist.findByIdAndDelete(id);
-    
+
       return { message: "Playlist unsaved" };
-    }
-    
-  }
+    },
+
+    followUser: async (_, { targetUsername }, context) => {
+      if (!context.userId) throw new Error("Not authenticated");
+
+      const currentUser = await User.findById(context.userId);
+      const targetUser = await User.findOne({ username: targetUsername });
+
+      if (!currentUser || !targetUser) throw new Error("User not found");
+      if (currentUser.id === targetUser.id) throw new Error("Cannot follow yourself");
+
+      if (!currentUser.following.includes(targetUser._id)) {
+        currentUser.following.push(targetUser._id);
+        targetUser.followers.push(currentUser._id);
+        await currentUser.save();
+        await targetUser.save();
+      }
+
+      return targetUser;
+    },
+
+    unfollowUser: async (_, { targetUsername }, context) => {
+      if (!context.userId) throw new Error("Not authenticated");
+
+      const currentUser = await User.findById(context.userId);
+      const targetUser = await User.findOne({ username: targetUsername });
+
+      if (!currentUser || !targetUser) throw new Error("User not found");
+
+      currentUser.following.pull(targetUser._id);
+      targetUser.followers.pull(currentUser._id);
+
+      await currentUser.save();
+      await targetUser.save();
+
+      return targetUser;
+    },
+  },
 };
-
-
 
 module.exports = resolvers;

@@ -18,6 +18,12 @@ const Navbar = () => {
       </Link>
 
       <div className="flex items-center gap-4">
+            <Link
+                to="/search-users"
+                className="text-sm text-orange-500 hover:underline"
+              >
+                Find Users
+            </Link>
         <Link
           to="/search"
           className="text-sm text-orange-500 hover:underline"

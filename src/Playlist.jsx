@@ -49,7 +49,7 @@ const Playlist = ({ playlistUrl }) => {
           `,
           variables: {
             url: playlistUrl,
-            title: playlistTitle, // ✅ use actual playlist title
+            title: playlistTitle, //  use actual playlist title
           },
         }),
       });
