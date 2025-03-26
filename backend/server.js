@@ -13,13 +13,11 @@ dotenv.config();
 app.use(express.json());
 app.use(cookieParser());
 
-
 const server = new ApolloServer({
   typeDefs,
   resolvers,
   context: ({ req }) => {
     const authHeader = req.headers.authorization || "";
-
     if (authHeader) {
       try {
         const token = authHeader.replace("Bearer ", "");
@@ -30,7 +28,6 @@ const server = new ApolloServer({
         return {};
       }
     }
-
     return {};
   },
 });
@@ -47,8 +44,9 @@ async function startServer() {
     .then(() => console.log("✅ MongoDB connected"))
     .catch((err) => console.log("❌ MongoDB connection error:", err));
 
-  app.listen(4000, () => {
-    console.log("🚀 Server running at http://localhost:4000/graphql");
+  const PORT = process.env.PORT || 4000;
+  app.listen(PORT, () => {
+    console.log(`🚀 Server running at http://localhost:${PORT}${server.graphqlPath}`);
   });
 }
 

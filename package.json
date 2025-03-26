@@ -19,8 +19,9 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "vite",
-    "build": "tsc && vite build"
+    "start": "node server.js",
+    "dev": "vite",
+    "build": "vite build"
   },
   "eslintConfig": {
     "extends": [
