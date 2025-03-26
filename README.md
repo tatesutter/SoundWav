@@ -17,6 +17,13 @@ There are no licenses required to use this application.
 ## How to Create a JSONWeb Token (JWT)
 
 ## How to Create a New SoundWav account
+To create a new SoundWav account, follow these steps:
+
+- Access the site at https://soundwav.onrender.com/.
+- Click the "Sign Up" button.
+- Provide a "Username" and "Password".
+- Click the "Sign Up" button located directly below the "Password" text box.
+- If the account creation is unsuccessful an error message will be displayed. If the account creation is successful, then you'll see the account night displayed at the top right corner of the page.
 
 ## How to Search for a Playlist to add to your account
 
