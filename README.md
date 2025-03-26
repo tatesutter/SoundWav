@@ -29,3 +29,5 @@ There are no licenses required to use this application.
 -	Allow users to create their own playlists in Sound Cloud directly from our app.
 -	Add Friends via our App so that they can get access to more playlists.
 
+## Link to Deployed Site
+The site is deployed to https://soundwav.onrender.com/.
