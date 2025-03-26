@@ -50,7 +50,7 @@ export default function Profile() {
     const token = localStorage.getItem("token");
 
     try {
-      await fetch("http://localhost:4000/graphql", {
+      await fetch(import.meta.env.VITE_API_URL, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

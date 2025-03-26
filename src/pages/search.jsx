@@ -52,7 +52,7 @@ export default function Search() {
     const token = localStorage.getItem("token");
 
     try {
-      const response = await fetch("http://localhost:4000/graphql", {
+      const response = await fetch(import.meta.env.VITE_API_URL, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

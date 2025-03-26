@@ -60,7 +60,7 @@ export default function UserProfile() {
 
     const fetchSavedPlaylists = async () => {
       try {
-        const res = await fetch("http://localhost:4000/graphql", {
+        const res = await fetch(import.meta.env.VITE_API_URL, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -95,7 +95,7 @@ export default function UserProfile() {
     try {
       const mutation = action === "follow" ? "followUser" : "unfollowUser";
 
-      const res = await fetch("http://localhost:4000/graphql", {
+      const res = await fetch(import.meta.env.VITE_API_URL, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -124,7 +124,7 @@ export default function UserProfile() {
 
   const handleSave = async (url, title, playlistId) => {
     try {
-      const res = await fetch("http://localhost:4000/graphql", {
+      const res = await fetch(import.meta.env.VITE_API_URL, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
