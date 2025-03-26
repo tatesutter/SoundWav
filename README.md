@@ -36,7 +36,13 @@ To create a new SoundWav account, follow these steps:
 ## How to Search for a Playlist to add to your account
 - Access the site at https://soundwav.onrender.com/.
 - CLick the "Search Playlists" button.
+
+![Search_Playlists_Button](src/assets/images/04_Search_Playlists.png)
+  
 - Paste a SoundCloud playlist link into the Search textbox and click the "Load" button.
+
+![Search_Playlists_Textbox](src/assets/images/05_Searching_Playlists.png)
+
 - The playlist will be display below to be played. Click the orange play button to play the playlist.
 
 ## How to Remove a Playlist from your account
