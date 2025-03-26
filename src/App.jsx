@@ -11,6 +11,7 @@ import UserProfile from "./pages/userProfile";
 import Friends from "./pages/friends";
 import demoGif from "./assets/demo.gif";
 import "./index.css"; // make sure Tailwind is set up for dark mode
+import { Link} from "react-router-dom";
 
 const Landing = () => (
   <div className="relative overflow-hidden text-center max-w-2xl mx-auto mt-12">
@@ -20,8 +21,8 @@ const Landing = () => (
     </p>
 
     <div className="flex flex-col sm:flex-row justify-center gap-4 mb-8">
-      <a href="/search" className="bg-orange-500 text-white px-6 py-2 rounded hover:bg-orange-600 transition">🔍 Search Playlists</a>
-      <a href="/search-users" className="bg-blue-500 text-white px-6 py-2 rounded hover:bg-blue-600 transition">👥 Search Users</a>
+      <Link to="/search" className="bg-orange-500 text-white px-6 py-2 rounded hover:bg-orange-600 transition">🔍 Search Playlists</Link>
+      <Link to="/search-users" className="bg-blue-500 text-white px-6 py-2 rounded hover:bg-blue-600 transition">👥 Search Users</Link>
     </div>
 
     <div className="mt-4">

@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { UserPlus, Lock } from "lucide-react";
 import { AuthContext } from "../context/authContext";
 import { jwtDecode } from "jwt-decode";
+import { Link } from "react-router-dom";
 
 export default function Register() {
   const [formData, setFormData] = useState({ username: "", password: "" });
@@ -128,9 +129,9 @@ export default function Register() {
 
         <p className="mt-4 text-sm text-center text-gray-500">
           Already have an account?{" "}
-          <a href="/login" className="text-blue-600 hover:underline">
+          <Link to="/login" className="text-blue-600 hover:underline">
             Login
-          </a>
+          </Link>
         </p>
       </div>
     </div>

@@ -52,12 +52,12 @@ export default function Friends() {
         <ul className="space-y-2">
           {friends.map((user) => (
             <li key={user.username}>
-              <a
-                href={`/user/${user.username}`}
+              <Link
+                to={`/user/${user.username}`}
                 className="text-blue-600 hover:underline"
               >
                 @{user.username}
-              </a>
+              </Link>
             </li>
           ))}
         </ul>
