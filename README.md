@@ -21,9 +21,17 @@ To create a new SoundWav account, follow these steps:
 
 - Access the site at https://soundwav.onrender.com/.
 - Click the "Sign Up" button.
+
+![Sign_Up_Button](./src/assets/images/01_Sign_Up_button.png)
+
 - Provide a "Username" and "Password".
 - Click the "Sign Up" button located directly below the "Password" text box.
+
+![Create_Account_Button](./src/assets/images/02_Create_Account.png)
+
 - If the account creation is unsuccessful an error message will be displayed. If the account creation is successful, then you'll see the account night displayed at the top right corner of the page.
+
+![User_Profile_Logged_In](src/assets/images/03_Account_Creation.png)
 
 ## How to Search for a Playlist to add to your account
 
