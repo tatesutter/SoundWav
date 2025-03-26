@@ -39,7 +39,7 @@ export default function Register() {
 
     try {
       // 1. Register the user
-      const regRes = await fetch("http://localhost:4000/graphql", {
+      const regRes = await fetch(import.meta.env.VITE_API_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ query: registerMutation, variables: formData }),
@@ -52,7 +52,7 @@ export default function Register() {
       }
 
       // 2. Auto-login the user
-      const loginRes = await fetch("http://localhost:4000/graphql", {
+      const loginRes = await fetch(import.meta.env.VITE_API_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ query: loginMutation, variables: formData }),

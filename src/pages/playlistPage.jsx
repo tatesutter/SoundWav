@@ -6,7 +6,7 @@ export default function PlaylistPage() {
   const [playlist, setPlaylist] = useState(null);
 
   useEffect(() => {
-    fetch("http://localhost:4000/graphql", {
+    fetch(import.meta.env.VITE_API_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
