@@ -22,6 +22,9 @@ There are no licenses required to use this application.
 
 ## How to Remove a Playlist from your account
 
+## Github Actions
+- Runs Super Linter on push to check code for errors/cleanliness
+
 ## Future Developments
 -	Allow users to create their own playlists in Sound Cloud directly from our app.
 -	Add Friends via our App so that they can get access to more playlists.
