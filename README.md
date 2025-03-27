@@ -13,8 +13,24 @@ There are no licenses required to use this application.
 - Type "npm i" and click the "Enter" key.
 
 ## Update .env for JWT & MongoDB credentials
+- Your .env file should contain:
+
+`MONGO=mongodb+srv://<username>:<password>@music-player.46cm2.mongodb.net/<database>?retryWrites=true&w=majority`
+
+- Replace:
+
+`<username> and <password> with your DB credentials`
+
+`<database> with your DB name (e.g., soundwav)`
 
 ## How to Create a JSONWeb Token (JWT)
+- Your .env file should contain:
+
+`JWT_SECRET=`
+
+- The JWT Secret can be anything e.g.:
+
+`JWT_SECRET=super_secret_key`
 
 ## How to Create a New SoundWav account
 To create a new SoundWav account, follow these steps:
